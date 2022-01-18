@@ -1,0 +1,10 @@
+---
+name: rank
+description: Very simple rank system
+authors:
+  - acikek
+version: 1.0.0
+license: MIT
+homepage: "https://github.com/acikek/rank"
+repository: "https://github.com/acikek/rank"
+dependencies: []

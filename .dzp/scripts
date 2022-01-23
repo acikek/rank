@@ -26,6 +26,28 @@ rank_default:
     - events
     - type
   doc: ~
+rank_get:
+  path: "./rank.dsc"
+  type: procedure
+  keys:
+    - data
+    - definitions
+    - script
+    - type
+  doc:
+    deprecated: ~
+    description: Gets rank data from the rank_config.
+    usage: ~
+    determine:
+      description: The rank data. May be null.
+      type: MapTag
+    uses:
+      - rank_config
+    defs:
+      id:
+        description: The ID of the rank.
+        type: ElementTag
+    keys: ~
 rank_give:
   path: "./rank.dsc"
   type: task

@@ -27,6 +27,10 @@ Use [dzp](https://github.com/acikek/dzp-rs) for additional features.
 
 - `rank_config`
 
+### Procedure
+
+- `rank_get`
+
 ### Task
 
 - `rank_give`

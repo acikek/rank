@@ -3,25 +3,35 @@ rank_config:
   permissions: true
   ranks:
     default:
-      name: <gray>Player
+      name: Player
+      color: <gray>
       group: player
     moderator:
-      name: <dark_aqua>Moderator
+      name: Moderator
+      color: <dark_aqua>
       group: moderator
     admin:
-      name: <red>Admin
+      name: Admin
+      color: <red>
       group: admin
     owner:
-      name: <gold>Owner
+      name: Owner
+      color: <gold>
       group: owner
+
+rank_get:
+  type: procedure
+  definitions: id
+  script:
+  - determine <script[rank_config].data_key[ranks].get[id].if_null[null]>
 
 rank_give:
   type: task
-  definitions: target|name|data
+  definitions: target|id|data
   script:
-  - flag <[target]> rank:<[name]>
+  - flag <[target]> rank:<[id]>
   - group set <[data].get[group]> player:<[target]> if:<script[rank_config].data_key[permissions]>
-  - customevent id:rank context:[id=<[name]>;data=<[data]>]
+  - customevent id:rank context:[id=<[id]>;data=<[data]>]
 
 rank:
   type: command
@@ -38,8 +48,8 @@ rank:
     - narrate "<gray>If no player is specified, applies the rank to yourself."
     - stop
 
-  - define rank <script[rank_config].data_key[ranks].get[<context.args.first>].if_null[null]>
-  - if <[rank]> == null:
+  - define data <context.args.first.proc[rank_get]>
+  - if <[data]> == null:
     - narrate "<red>That rank doesn't exist!"
     - stop
 
@@ -51,11 +61,11 @@ rank:
   - else:
     - define target <player>
 
-  - run rank_give def:<[target]>|<context.args.first>|<[rank]>
-  - narrate "<green>Gave rank <[rank].get[name].parsed> <green>to <yellow><[target].name><green>."
+  - run rank_give def:<[target]>|<context.args.first>|<[data]>
+  - narrate "<green>Gave rank <[data].get[color]><[data].get[name]> <green>to <yellow><[target].name><green>."
 
 rank_default:
   type: world
   events:
     after player joins flagged:!rank:
-    - run rank_give def:<player>|default|<script[rank_config].data_key[ranks].get[default]>
+    - run rank_give def:<player>|default|<proc[rank_get].context[default]>

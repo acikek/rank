@@ -23,7 +23,7 @@ rank_get:
   type: procedure
   definitions: id
   script:
-  - determine <script[rank_config].data_key[ranks].get[id].if_null[null]>
+  - determine <script[rank_config].data_key[ranks].get[<[id]>].if_null[null]>
 
 rank_give:
   type: task
@@ -62,7 +62,7 @@ rank:
     - define target <player>
 
   - run rank_give def:<[target]>|<context.args.first>|<[data]>
-  - narrate "<green>Gave rank <[data].get[color]><[data].get[name]> <green>to <yellow><[target].name><green>."
+  - narrate "<green>Gave rank <[data].get[color].parsed><[data].get[name]> <green>to <yellow><[target].name><green>."
 
 rank_default:
   type: world

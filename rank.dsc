@@ -4,7 +4,7 @@ rank_config:
   ranks:
     default:
       name: Player
-      color: <gray>
+      color: <green>
       group: player
     moderator:
       name: Moderator
@@ -62,7 +62,7 @@ rank:
     - define target <player>
 
   - run rank_give def:<[target]>|<context.args.first>|<[data]>
-  - narrate "<green>Gave rank <[data].get[color].parsed><[data].get[name]> <green>to <yellow><[target].name><green>."
+  - narrate "<green>Gave rank <[data].get[color].parsed><[data].get[name].italicize> <green>to <yellow><[target].name><green>."
 
 rank_default:
   type: world

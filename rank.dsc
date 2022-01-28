@@ -21,48 +21,48 @@ rank_config:
 
 rank_get:
   type: procedure
+  debug: false
   definitions: id
   script:
   - determine <script[rank_config].data_key[ranks].get[<[id]>].if_null[null]>
 
 rank_give:
   type: task
-  definitions: target|id|data
+  definitions: user|id|data
   script:
-  - flag <[target]> rank:<[id]>
-  - group set <[data].get[group]> player:<[target]> if:<script[rank_config].data_key[permissions]>
+  - flag <[user]> rank:<[id]>
+  - group set <[data].get[group]> player:<[user]> if:<script[rank_config].data_key[permissions]>
   - customevent id:rank context:[id=<[id]>;data=<[data]>]
 
 rank:
   type: command
   name: rank
   description: Gives a rank to a player
-  usage: /rank <&lt>rank<&gt> <&lt>player<&gt>
+  usage: /rank <&lt>rank<&gt> (<&lt>player<&gt>)
+  required: 1
   permission: rank.command
   tab completions:
     1: <script[rank_config].data_key[ranks].keys>
-    2: <server.players.parse[name]>
+    2: <server.players.exclude[<player>].parse[name]>
   script:
-  - if <context.args.is_empty>:
-    - narrate "<yellow>/rank <&lt>rank<&gt> <&lt>player<&gt>"
-    - narrate "<gray>If no player is specified, applies the rank to yourself."
-    - stop
+  - inject cmd_args
 
   - define data <context.args.first.proc[rank_get]>
   - if <[data]> == null:
     - narrate "<red>That rank doesn't exist!"
     - stop
 
-  - if <context.args.get[2].exists>:
-    - define target <server.match_offline_player[<context.args.get[2]>].if_null[null]>
-    - if <[target]> == null:
-      - narrate "<red>That player doesn't exist!"
-      - stop
+  - if <context.args.size> < 2:
+    - define user <player>
   - else:
-    - define target <player>
+    - define user <context.args.get[2]>
+    - inject cmd_player
 
-  - run rank_give def:<[target]>|<context.args.first>|<[data]>
-  - narrate "<green>Gave rank <[data].get[color].parsed><[data].get[name].italicize> <green>to <yellow><[target].name><green>."
+  - run rank_give def:<[user]>|<context.args.first>|<[data]>
+
+  - define name <[data].get[color].parsed><[data].get[name].italicize>
+  - narrate "<green>Gave rank <[name]> <green>to <yellow><[user].name><green>." if:<player.equals[<[user]>].not>
+  - narrate "<green>You've been given the <[name]> <green>rank!" targets:<[user]>
 
 rank_default:
   type: world

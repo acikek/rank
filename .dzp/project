@@ -7,4 +7,5 @@ version: 1.0.0
 license: MIT
 homepage: "https://github.com/acikek/rank"
 repository: "https://github.com/acikek/rank"
-dependencies: []
+dependencies:
+- "https://forum.denizenscript.com/resources/command-utilities.78/"

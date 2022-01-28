@@ -17,6 +17,10 @@ git clone https://github.com/acikek/rank
 ```
 Use [dzp](https://github.com/acikek/dzp-rs) for additional features.
 
+### Dependencies
+
+- [Command Utilities](https://forum.denizenscript.com/resources/command-utilities.78/)
+
 ## Scripts
 
 ### Command

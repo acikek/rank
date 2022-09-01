@@ -28,6 +28,7 @@ rank_get:
 
 rank_give:
   type: task
+  debug: false
   definitions: user|id|data
   script:
   - flag <[user]> rank:<[id]>
@@ -36,6 +37,7 @@ rank_give:
 
 rank:
   type: command
+  debug: false
   name: rank
   description: Gives a rank to a player
   usage: /rank <&lt>rank<&gt> (<&lt>player<&gt>)

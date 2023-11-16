@@ -15,7 +15,6 @@ Clone using git:
 ```sh
 git clone https://github.com/acikek/rank
 ```
-Use [dzp](https://github.com/acikek/dzp-rs) for additional features.
 
 ### Dependencies
 
